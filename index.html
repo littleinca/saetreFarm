@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +42,8 @@
     font-size: 1rem;
     color: var(--ink);
   }
-  .nav-links { list-style: none; display: flex; gap: 2rem; }
-  .nav-links a {
+  .nav-center { list-style: none; display: flex; gap: 2rem; }
+  .nav-center a {
     color: var(--ink-mid);
     text-decoration: none;
     font-size: 0.68rem;
@@ -51,7 +51,41 @@
     text-transform: uppercase;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--ink); }
+  .nav-center a:hover { color: var(--ink); }
+
+  /* Language switcher */
+  .lang-switch {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .lang-switch button {
+    background: none;
+    border: none;
+    padding: 0.3rem 0.7rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-right: 1px solid var(--rule);
+  }
+  .lang-switch button:last-child { border-right: none; }
+  .lang-switch button.active {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  /* Language visibility */
+  [data-lang] { display: none; }
+  body.lang-no [data-lang="no"] { display: revert; }
+  body.lang-en [data-lang="en"] { display: revert; }
+  /* For block-level elements */
+  section [data-lang], .wrap [data-lang], p[data-lang], h2[data-lang],
+  span[data-lang], li[data-lang], dt[data-lang], dd[data-lang] { display: revert; }
 
   /* ── HERO ── */
   .hero {
@@ -139,11 +173,7 @@
     color: var(--ink-mid);
     max-width: 560px;
   }
-  .rule-divider {
-    border: none;
-    border-top: 1px solid var(--rule);
-    margin: 0;
-  }
+  .rule-divider { border: none; border-top: 1px solid var(--rule); margin: 0; }
 
   /* ── LAMB ── */
   .lamb { background: var(--cream); }
@@ -160,6 +190,7 @@
     padding: 1.4rem 1.5rem;
     border-right: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
+    transition: background 0.2s;
   }
   .price-item:hover { background: var(--parchment); }
   .price-cut {
@@ -182,8 +213,9 @@
     line-height: 1.7;
     max-width: 520px;
   }
+  .price-note a { color: inherit; border-bottom: 1px solid var(--rule); text-decoration: none; }
 
-  /* ── THE MAKERY ── */
+  /* ── MAKERY ── */
   .makery { background: var(--parchment); }
   .makery p { max-width: 580px; }
 
@@ -217,12 +249,7 @@
   }
   dd a { color: var(--ink-mid); text-decoration: none; border-bottom: 1px solid var(--rule); }
   dd a:hover { color: var(--ink); }
-
-  .map-box {
-    border: 1px solid var(--rule);
-    overflow: hidden;
-    background: var(--cream);
-  }
+  .map-box { border: 1px solid var(--rule); overflow: hidden; background: var(--cream); }
   .map-box iframe { display: block; width: 100%; filter: grayscale(1) sepia(0.15) contrast(0.9); }
 
   /* ── FOOTER ── */
@@ -233,54 +260,42 @@
     justify-content: space-between;
     align-items: center;
   }
-  .footer-brand {
-    font-family: 'IM Fell English', serif;
-    font-size: 1rem;
-    color: var(--cream);
-  }
+  .footer-brand { font-family: 'IM Fell English', serif; font-size: 1rem; color: var(--cream); }
   .footer-social { display: flex; gap: 1.3rem; align-items: center; }
-  .footer-social a {
-    color: var(--ink-light);
-    display: flex;
-    align-items: center;
-    transition: color 0.2s;
-  }
+  .footer-social a { color: var(--ink-light); display: flex; align-items: center; transition: color 0.2s; }
   .footer-social a:hover { color: var(--cream); }
-  footer p {
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    max-width: none;
-  }
+  footer p { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); max-width: none; }
 
   @media (max-width: 680px) {
-    .nav-links { display: none; }
+    .nav-center { display: none; }
     .visit .wrap { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 1rem; text-align: center; }
     .hero-frame { inset: 0.8rem; }
   }
 </style>
 </head>
-<body>
+<body class="lang-no">
 
 <nav>
   <span class="nav-logo">Sætre Farm</span>
-  <ul class="nav-links">
-    <li><a href="#lamb">Sætrelam</a></li>
+  <ul class="nav-center">
+    <li><a href="#lamb" data-lang="no">Sætrelam</a><a href="#lamb" data-lang="en">Lamb</a></li>
     <li><a href="#makery">The Makery</a></li>
-    <li><a href="#visit">Visit</a></li>
+    <li><a href="#visit" data-lang="no">Besøk oss</a><a href="#visit" data-lang="en">Visit</a></li>
   </ul>
+  <div class="lang-switch">
+    <button id="btn-no" class="active" onclick="setLang('no')">NO</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-frame"></div>
-  <img class="hero-logo"
-    src="images/logo.png"
-    alt="Sætre Farm — made in the mountains">
+  <img class="hero-logo" src="images/logo.png" alt="Sætre Farm — made in the mountains">
   <div class="hero-rule"></div>
-  <p class="hero-tagline">Lamb, sheepskin &amp; handcraft from Juvsgrend</p>
+  <p class="hero-tagline" data-lang="no">Lam, saueskinn og håndverk fra Juvsgrend</p>
+  <p class="hero-tagline" data-lang="en">Lamb, sheepskin &amp; handcraft from Juvsgrend</p>
   <p class="hero-location">Nore og Uvdal &nbsp;·&nbsp; Numedalen &nbsp;·&nbsp; Norway</p>
   <div class="scroll-line"></div>
 </section>
@@ -291,9 +306,11 @@
 <section class="lamb" id="lamb">
   <div class="wrap">
     <span class="label">Sætrelam</span>
-    <h2>Lamb from the <em>mountain pasture</em></h2>
+    <h2 data-lang="no">Lam fra <em>fjellbeitet</em></h2>
+    <h2 data-lang="en">Lamb from the <em>mountain pasture</em></h2>
     <div class="lamb-intro">
-      <p>Our lambs graze freely all summer in the beautiful Juvsgrend valley, alongside their mothers, choosing for themselves what to eat from the open mountain terrain. Cleaner and more sustainable meat is hard to find. Sold directly to customers, local supermarkets and restaurants — fresh, butchered and vacuum packed, ready for the freezer.</p>
+      <p data-lang="no">Lammene våre beiter fritt hele sommeren i vakre Juvsgrend, sammen med mødrene sine. De velger selv hva de vil spise i utmarka. Renere og mer bærekraftig kjøtt skal man lete lenge etter. Selges direkte til kunder, i supermarkedene i området og til restauranter — ferdig skåret og vakuumpakket, bare å putte rett i fryseren.</p>
+      <p data-lang="en">Our lambs graze freely all summer in the beautiful Juvsgrend valley, alongside their mothers, choosing for themselves what to eat from the open mountain terrain. Cleaner and more sustainable meat is hard to find. Sold directly to customers, local supermarkets and restaurants — butchered and vacuum packed, ready for the freezer.</p>
     </div>
 
     <div class="price-grid">
@@ -321,13 +338,16 @@
         <span class="price-cut">Kjøttdeig</span>
         <span class="price-amt">110,– kr / 0,5 kg pk</span>
       </div>
-      <div class="price-item" style="grid-column: 1/-1; background: var(--parchment);">
-        <span class="price-cut">Helt / halvt lam</span>
-        <span class="price-amt">220,– kr/kg &nbsp;·&nbsp; 15–20 kg whole</span>
+      <div class="price-item" style="grid-column:1/-1; background:var(--parchment);">
+        <span class="price-cut" data-lang="no">Helt / halvt lam</span>
+        <span class="price-cut" data-lang="en">Whole / half lamb</span>
+        <span class="price-amt" data-lang="no">220,– kr/kg &nbsp;·&nbsp; et helt lam veier 15–20 kg</span>
+        <span class="price-amt" data-lang="en">220,– kr/kg &nbsp;·&nbsp; a whole lamb weighs 15–20 kg</span>
       </div>
     </div>
 
-    <p class="price-note">We deliver along the Nore–Oslo route. SMS us at <a href="sms:95849107" style="color:inherit;border-bottom:1px solid var(--rule);">958 49 107</a> or message us on Facebook to order.</p>
+    <p class="price-note" data-lang="no">Vi leverer langs strekningen Nore–Oslo. Send oss en SMS på <a href="sms:95849107">958 49 107</a> eller meld fra på Facebook for å bestille.</p>
+    <p class="price-note" data-lang="en">We deliver along the Nore–Oslo route. SMS us at <a href="sms:95849107">958 49 107</a> or message us on Facebook to order.</p>
   </div>
 </section>
 
@@ -337,19 +357,24 @@
 <section class="makery" id="makery">
   <div class="wrap">
     <span class="label">The Makery</span>
-    <h2>Sheepskin &amp; <em>handcraft</em></h2>
-    <p>The hides from our sheep are brought home and transformed in our workshop — The Makery. Traps, Christmas hearts, seat pads and beautiful sheepskin rugs, all made here on the farm. If you are expecting something from The Makery, get in touch so we can plan accordingly.</p>
+    <h2 data-lang="no">Saueskinn &amp; <em>håndverk</em></h2>
+    <h2 data-lang="en">Sheepskin &amp; <em>handcraft</em></h2>
+    <p data-lang="no">Skinnene fra sauene våre blir til vakre produkter i arbeidsrommet vårt — The Makery. Feller, julehjerter, sitteunderlag og mye mer, alt laget her på gården. Venter du på noe fra The Makery? Gi oss et pip så vi kan legge opp planen.</p>
+    <p data-lang="en">The hides from our sheep are transformed in our workshop — The Makery. Rugs, Christmas hearts, seat pads and more, all made here on the farm. Expecting something from The Makery? Get in touch so we can plan accordingly.</p>
   </div>
 </section>
 
 <hr class="rule-divider">
 
-<!-- ANIMAL WELFARE -->
+<!-- WELFARE -->
 <section class="welfare" id="welfare">
   <div class="wrap">
-    <span class="label">How we farm</span>
-    <h2>Good lives on the <em>mountain</em></h2>
-    <p>In winter our ewes come and go as they please — sleeping under the stars or in a warm straw bed, their choice. We built the flock from four orphan lambs we were given the first spring after buying the farm. This winter we had around 60 ewes. Every one of them has a name as well as an ear tag.</p>
+    <span class="label" data-lang="no">Slik driver vi</span>
+    <span class="label" data-lang="en">How we farm</span>
+    <h2 data-lang="no">Gode liv på <em>fjellet</em></h2>
+    <h2 data-lang="en">Good lives on the <em>mountain</em></h2>
+    <p data-lang="no">Om vinteren får søyene gå inn og ut som de ønsker selv. De kan velge mellom å sove under stjernene eller inne i lun halmseng. Vi startet flokken med fire kopplam vi fikk gratis den første våren etter vi kjøpte gården. Denne vinteren hadde vi ca. 60 vinterfôra søyer — alle med navn i tillegg til individnummer.</p>
+    <p data-lang="en">In winter our ewes come and go as they please — sleeping under the stars or in a warm straw bed, their choice. We built the flock from four orphan lambs we were given the first spring after buying the farm. This winter we had around 60 ewes. Every one of them has a name as well as an ear tag.</p>
   </div>
 </section>
 
@@ -359,13 +384,18 @@
 <section class="visit" id="visit">
   <div class="wrap">
     <div>
-      <span class="label">Find us</span>
-      <h2>Getting to <em>Sætre</em></h2>
-      <p>We are in Juvsgrend in the mountains above Nore. Get in touch before you come.</p>
+      <span class="label" data-lang="no">Finn oss</span>
+      <span class="label" data-lang="en">Find us</span>
+      <h2 data-lang="no">Veien til <em>Sætre</em></h2>
+      <h2 data-lang="en">Getting to <em>Sætre</em></h2>
+      <p data-lang="no">Vi holder til i Juvsgrend i fjellet over Nore. Ta kontakt før du kommer.</p>
+      <p data-lang="en">We are in Juvsgrend in the mountains above Nore. Get in touch before you come.</p>
       <dl>
-        <dt>Address</dt>
+        <dt data-lang="no">Adresse</dt>
+        <dt data-lang="en">Address</dt>
         <dd>Juvsgrendvien 247<br>3629 Nore, Norway</dd>
-        <dt>Order &amp; enquiries</dt>
+        <dt data-lang="no">Bestilling og henvendelser</dt>
+        <dt data-lang="en">Order &amp; enquiries</dt>
         <dd><a href="sms:95849107">SMS 958 49 107</a></dd>
         <dt>Web</dt>
         <dd><a href="https://saetrefarm.no" target="_blank">saetrefarm.no</a></dd>
@@ -399,6 +429,19 @@
   </div>
   <p>© 2026 &nbsp;·&nbsp; Nore og Uvdal, Norway</p>
 </footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.documentElement.lang = lang === 'no' ? 'no' : 'en';
+    document.getElementById('btn-no').classList.toggle('active', lang === 'no');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    localStorage.setItem('sf-lang', lang);
+  }
+  // Restore preference
+  const saved = localStorage.getItem('sf-lang');
+  if (saved) setLang(saved);
+</script>
 
 </body>
 </html>
