@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sætre Farm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream:     #f4f0e8;
+    --parchment: #ede8dc;
+    --ink:       #1a1714;
+    --ink-mid:   #3a3530;
+    --ink-light: #7a7268;
+    --rule:      #c8c0b0;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.3rem 6vw;
+    border-bottom: 1px solid var(--rule);
+    background: var(--cream);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .nav-links { list-style: none; display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--ink-mid);
+    text-decoration: none;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6vh 6vw;
+    background: var(--cream);
+    position: relative;
+  }
+  .hero-frame {
+    position: absolute;
+    inset: 1.5rem;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+  .hero-logo {
+    width: min(500px, 80vw);
+    mix-blend-mode: multiply;
+    animation: rise 1.2s 0.2s ease both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-rule {
+    width: 160px; height: 1px;
+    background: var(--rule);
+    margin: 2rem auto 1.6rem;
+    animation: rise 1s 0.9s ease both;
+  }
+  .hero-tagline {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--ink-mid);
+    animation: rise 1s 1.1s ease both;
+  }
+  .hero-location {
+    margin-top: 0.5rem;
+    font-size: 0.63rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    animation: rise 1s 1.3s ease both;
+  }
+  .scroll-line {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--rule), transparent);
+  }
+
+  /* ── SHARED ── */
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: clamp(3.5rem, 7vw, 6rem) 6vw;
+  }
+  .label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1.4rem;
+  }
+  h2 em { font-style: italic; color: var(--ink-mid); }
+  p {
+    font-size: clamp(1rem, 1.6vw, 1.1rem);
+    line-height: 1.95;
+    color: var(--ink-mid);
+    max-width: 560px;
+  }
+  .rule-divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 0;
+  }
+
+  /* ── LAMB ── */
+  .lamb { background: var(--cream); }
+  .lamb-intro { max-width: 620px; margin-bottom: 3rem; }
+  .lamb-intro p { max-width: 100%; }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    border: 1px solid var(--rule);
+    margin-top: 2.5rem;
+  }
+  .price-item {
+    padding: 1.4rem 1.5rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .price-item:hover { background: var(--parchment); }
+  .price-cut {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .price-amt {
+    font-size: 0.85rem;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+  }
+  .price-note {
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    font-style: italic;
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  /* ── THE MAKERY ── */
+  .makery { background: var(--parchment); }
+  .makery p { max-width: 580px; }
+
+  /* ── WELFARE ── */
+  .welfare { background: var(--cream); }
+  .welfare p { max-width: 600px; }
+
+  /* ── VISIT ── */
+  .visit { background: var(--parchment); }
+  .visit .wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5vw;
+    align-items: start;
+  }
+  dl { margin-top: 2rem; border-top: 1px solid var(--rule); }
+  dt {
+    font-size: 0.6rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    padding-top: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  dd {
+    font-size: 0.98rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  dd a { color: var(--ink-mid); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  dd a:hover { color: var(--ink); }
+
+  .map-box {
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .map-box iframe { display: block; width: 100%; filter: grayscale(1) sepia(0.15) contrast(0.9); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 2.2rem 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    color: var(--cream);
+  }
+  .footer-social { display: flex; gap: 1.3rem; align-items: center; }
+  .footer-social a {
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: var(--cream); }
+  footer p {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    max-width: none;
+  }
+
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .visit .wrap { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .hero-frame { inset: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Sætre Farm</span>
+  <ul class="nav-links">
+    <li><a href="#lamb">Sætrelam</a></li>
+    <li><a href="#makery">The Makery</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-frame"></div>
+  <img class="hero-logo"
+    src="images/logo.png"
+    alt="Sætre Farm — made in the mountains">
+  <div class="hero-rule"></div>
+  <p class="hero-tagline">Lamb, sheepskin &amp; handcraft from Juvsgrend</p>
+  <p class="hero-location">Nore og Uvdal &nbsp;·&nbsp; Numedalen &nbsp;·&nbsp; Norway</p>
+  <div class="scroll-line"></div>
+</section>
+
+<hr class="rule-divider">
+
+<!-- LAMB -->
+<section class="lamb" id="lamb">
+  <div class="wrap">
+    <span class="label">Sætrelam</span>
+    <h2>Lamb from the <em>mountain pasture</em></h2>
+    <div class="lamb-intro">
+      <p>Our lambs graze freely all summer in the beautiful Juvsgrend valley, alongside their mothers, choosing for themselves what to eat from the open mountain terrain. Cleaner and more sustainable meat is hard to find. Sold directly to customers, local supermarkets and restaurants — fresh, butchered and vacuum packed, ready for the freezer.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-item">
+        <span class="price-cut">Koteletter</span>
+        <span class="price-amt">260,– kr/kg</span>
+      </div>
+      <div class="price-item">
+        <span class="price-cut">Skivet bog</span>
+        <span class="price-amt">210,– kr/kg</span>
+      </div>
+      <div class="price-item">
+        <span class="price-cut">Hele lår</span>
+        <span class="price-amt">295,– kr/kg</span>
+      </div>
+      <div class="price-item">
+        <span class="price-cut">Fårikål- / grytekjøtt</span>
+        <span class="price-amt">210,– kr/kg</span>
+      </div>
+      <div class="price-item">
+        <span class="price-cut">Strimla ribbe</span>
+        <span class="price-amt">275,– kr/kg</span>
+      </div>
+      <div class="price-item">
+        <span class="price-cut">Kjøttdeig</span>
+        <span class="price-amt">110,– kr / 0,5 kg pk</span>
+      </div>
+      <div class="price-item" style="grid-column: 1/-1; background: var(--parchment);">
+        <span class="price-cut">Helt / halvt lam</span>
+        <span class="price-amt">220,– kr/kg &nbsp;·&nbsp; 15–20 kg whole</span>
+      </div>
+    </div>
+
+    <p class="price-note">We deliver along the Nore–Oslo route. SMS us at <a href="sms:95849107" style="color:inherit;border-bottom:1px solid var(--rule);">958 49 107</a> or message us on Facebook to order.</p>
+  </div>
+</section>
+
+<hr class="rule-divider">
+
+<!-- THE MAKERY -->
+<section class="makery" id="makery">
+  <div class="wrap">
+    <span class="label">The Makery</span>
+    <h2>Sheepskin &amp; <em>handcraft</em></h2>
+    <p>The hides from our sheep are brought home and transformed in our workshop — The Makery. Traps, Christmas hearts, seat pads and beautiful sheepskin rugs, all made here on the farm. If you are expecting something from The Makery, get in touch so we can plan accordingly.</p>
+  </div>
+</section>
+
+<hr class="rule-divider">
+
+<!-- ANIMAL WELFARE -->
+<section class="welfare" id="welfare">
+  <div class="wrap">
+    <span class="label">How we farm</span>
+    <h2>Good lives on the <em>mountain</em></h2>
+    <p>In winter our ewes come and go as they please — sleeping under the stars or in a warm straw bed, their choice. We built the flock from four orphan lambs we were given the first spring after buying the farm. This winter we had around 60 ewes. Every one of them has a name as well as an ear tag.</p>
+  </div>
+</section>
+
+<hr class="rule-divider">
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="wrap">
+    <div>
+      <span class="label">Find us</span>
+      <h2>Getting to <em>Sætre</em></h2>
+      <p>We are in Juvsgrend in the mountains above Nore. Get in touch before you come.</p>
+      <dl>
+        <dt>Address</dt>
+        <dd>Juvsgrendvien 247<br>3629 Nore, Norway</dd>
+        <dt>Order &amp; enquiries</dt>
+        <dd><a href="sms:95849107">SMS 958 49 107</a></dd>
+        <dt>Web</dt>
+        <dd><a href="https://saetrefarm.no" target="_blank">saetrefarm.no</a></dd>
+      </dl>
+    </div>
+    <div class="map-box">
+      <iframe
+        src="https://maps.google.com/maps?q=0x4640837f9d491e93:0x1850aee8144ec324&output=embed&z=14"
+        height="400"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Sætre Farm location">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Sætre Farm</span>
+  <div class="footer-social">
+    <a href="https://facebook.com/saetrefarm" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a href="https://instagram.com/saetrefarm" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="https://youtube.com/@saetrefarm" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#1a1714"/></svg>
+    </a>
+  </div>
+  <p>© 2026 &nbsp;·&nbsp; Nore og Uvdal, Norway</p>
+</footer>
+
+</body>
+</html>
