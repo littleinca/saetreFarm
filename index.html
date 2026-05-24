@@ -80,12 +80,10 @@
   }
 
   /* Language visibility */
-  [data-lang] { display: none; }
-  body.lang-no [data-lang="no"] { display: revert; }
-  body.lang-en [data-lang="en"] { display: revert; }
+
+
+
   /* For block-level elements */
-  section [data-lang], .wrap [data-lang], p[data-lang], h2[data-lang],
-  span[data-lang], li[data-lang], dt[data-lang], dd[data-lang] { display: revert; }
 
   /* ── HERO ── */
   .hero {
@@ -432,15 +430,21 @@
 
 <script>
   function setLang(lang) {
-    document.body.className = 'lang-' + lang;
     document.documentElement.lang = lang === 'no' ? 'no' : 'en';
     document.getElementById('btn-no').classList.toggle('active', lang === 'no');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    // Show/hide all data-lang elements
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.style.display = el.dataset.lang === lang ? '' : 'none';
+    });
+
     localStorage.setItem('sf-lang', lang);
   }
-  // Restore preference
-  const saved = localStorage.getItem('sf-lang');
-  if (saved) setLang(saved);
+
+  // Run on load — default Norwegian
+  const saved = localStorage.getItem('sf-lang') || 'no';
+  setLang(saved);
 </script>
 
 </body>
